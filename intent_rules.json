@@ -1,0 +1,36 @@
+{
+  "intent-rules": [
+    {
+      "intent_id": "INTENT_INVOICE_REQ",
+      "detection_rules": {
+        "keywords": ["solicito factura", "xml", "fiscal", "facturar"],
+        "min_match_count": 1
+      },
+      "extraction_strategy": "regex_simple",
+      "et_action": {
+        "type": "stored_procedure",
+        "name": "sp_finance_process_invoice_request",
+        "params_map": {
+          "@order_ref": "extracted_order_id",
+          "@client_rfc": "extracted_rfc",
+          "@request_source": "_meta.channel_id"
+        }
+      }
+    },
+    {
+      "intent_id": "INTENT_URGENT_CANCEL",
+      "detection_rules": {
+        "keywords": ["cancelar", "detener envío", "error pedido"],
+        "priority_flag": "HIGH"
+      },
+      "target_action": {
+        "type": "stored_procedure",
+        "name": "sp_ops_void_order",
+        "params_map": {
+          "@order_id": "extracted_order_id",
+          "@reason": "full_text_body"
+        }
+      }
+    }
+  ]
+}
