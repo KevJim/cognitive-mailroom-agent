@@ -1,8 +1,10 @@
 import pytest
 from fastapi.testclient import TestClient
-from src.api.main import app
+from src.api.main import app, startup_event
 from src.services.db_simulator import db_simulator
 
+# Ensure config is loaded before creating client
+startup_event()
 client = TestClient(app)
 
 

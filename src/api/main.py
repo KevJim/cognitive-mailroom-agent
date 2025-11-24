@@ -9,7 +9,7 @@ from ..services.db_simulator import db_simulator
 
 # --- Application Setup ---
 app = FastAPI(title="Cognitive Mailroom Agent")
-config: AppConfig
+config: AppConfig = None
 
 @app.on_event("startup")
 def startup_event():
@@ -22,6 +22,7 @@ def process_message_task(request: ProcessMessageRequest):
     """
     The main orchestration logic that runs in the background.
     """
+    global config
     intent = None
     try:
         # 1. Detect Intent

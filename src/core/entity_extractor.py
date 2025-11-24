@@ -5,7 +5,7 @@ from ..models.models import IntentRule
 # Pre-compiled regex for efficiency, can be expanded
 ENTITY_REGEX_MAP = {
     "extracted_order_id": r"\b(ORD-\d+)\b",
-    "extracted_rfc": r"\b([A-Z&Ñ]{3,4}\d{6}[A-V1-9][A-Z1-9]{2})\b"
+    "extracted_rfc": r"\b([A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3})\b"
 }
 
 

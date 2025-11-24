@@ -3,7 +3,13 @@
     {
       "intent_id": "INTENT_INVOICE_REQ",
       "detection_rules": {
-        "keywords": ["solicito factura", "xml", "fiscal", "facturar"],
+        "keywords": [
+          "solicito factura",
+          "factura",
+          "xml",
+          "fiscal",
+          "facturar"
+        ],
         "min_match_count": 1
       },
       "extraction_strategy": "regex_simple",
@@ -23,6 +29,7 @@
         "keywords": ["cancelar", "detener envío", "error pedido"],
         "priority_flag": "HIGH"
       },
+      "extraction_strategy": "regex_simple",
       "target_action": {
         "type": "stored_procedure",
         "name": "sp_ops_void_order",
