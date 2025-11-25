@@ -23,10 +23,8 @@ def load_intent_rules(path: str = "intent_rules.json") -> AppConfig:
         RuntimeError: If the file is not found, invalid, or cannot be decoded.
     """
     try:
-        # Convert to Path object to handle relative paths correctly
         config_path = Path(path)
         if not config_path.is_absolute():
-            # If relative path, resolve from project root
             config_path = Path(__file__).parent.parent.parent / path
         
         with open(config_path, "r", encoding="utf-8") as f:

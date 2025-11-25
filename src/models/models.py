@@ -29,18 +29,11 @@ class IntentRule(BaseModel):
     @model_validator(mode='before')
     @classmethod
     def normalize_action_field(cls, data: dict) -> dict:
-        """
-        Normalize the action field to handle both 'et_action' and 'target_action' keys.
-        This handles the inconsistency in the JSON where some rules use 'et_action' 
-        and others use 'target_action'.
-        """
+        """Normalize the action field to handle both 'et_action' and 'target_action' keys."""
         if isinstance(data, dict):
-            # Check if 'et_action' exists but 'target_action' doesn't
             if 'et_action' in data and 'target_action' not in data:
                 data['target_action'] = data.pop('et_action')
-            # If both exist, prefer 'target_action'
             elif 'et_action' in data and 'target_action' in data:
-                # Keep target_action, remove et_action
                 data.pop('et_action')
         return data
 

@@ -23,7 +23,6 @@ def detect_intent(text: str, config: AppConfig) -> Optional[IntentRule]:
                 match_count += 1
         
         if match_count >= rule.detection_rules.min_match_count:
-            # Return the first rule that meets the criteria
             return rule
             
     return None

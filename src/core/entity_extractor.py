@@ -2,7 +2,6 @@ import re
 from typing import Dict, Optional
 from ..models.models import IntentRule
 
-# Pre-compiled regex for efficiency, can be expanded
 ENTITY_REGEX_MAP = {
     "extracted_order_id": r"\b(ORD-\d+)\b",
     "extracted_rfc": r"\b([A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3})\b"
@@ -22,21 +21,16 @@ def extract_entities(text: str, rule: IntentRule) -> Dict[str, Optional[str]]:
         to the extracted values. Returns None for values that are not found.
     """
     extracted_data = {}
-    
-    # The params_map tells us which entities to look for
     params_to_find = rule.target_action.params_map.values()
 
     for entity_name in params_to_find:
-        # Handle special cases first
         if entity_name == "full_text_body":
             extracted_data[entity_name] = text
             continue
         if entity_name == "_meta.channel_id":
-            # This is metadata, not extracted from the body
-            extracted_data[entity_name] = None  # Placeholder, will be filled by orchestrator
+            extracted_data[entity_name] = None
             continue
 
-        # Use regex to find other entities
         regex_pattern = ENTITY_REGEX_MAP.get(entity_name)
         if regex_pattern:
             match = re.search(regex_pattern, text, re.IGNORECASE)
